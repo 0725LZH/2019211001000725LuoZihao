@@ -1,13 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 庚辰孟冬
-  Date: 2021/4/10
-  Time: 21:17
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@include file="header.jsp"%>
 <h1>Login</h1>
+<%
+    if(request.getAttribute("message")!=null){
+        out.println(request.getAttribute("message"));
+    }
+%>
 <form method="post" action="Login">
     <table>
         <tr> <td>username:</td> <td><input type="text" name="username" required><br/></td></tr>
