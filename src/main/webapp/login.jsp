@@ -6,7 +6,7 @@
         out.println(request.getAttribute("message"));
     }
 %>
-<form method="post" action="Login">
+<form method="post" action="login">
     <table>
         <tr> <td>username:</td> <td><input type="text" name="username" required><br/></td></tr>
         <tr> <td>password:</td> <td><input type="password" name="password" required minlength="3"><br/></td></tr>
