@@ -12,10 +12,31 @@
 <servlet-name>LifeCycleServlet</servlet-name>
 <servlet-class>com.LuoZihao.week3.demo.LifeCycleServlet</servlet-class>
 </servlet>
+<servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.LuoZihao.week5.demo.LoginServlet</servlet-class>
+</servlet>
     <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.LuoZihao.week5.demo.LoginServlet</servlet-class>
+        <servlet-name>redirectServlet</servlet-name>
+        <servlet-class>com.LuoZihao.week6.demo.RedirectServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>searchServlet</servlet-name>
+        <servlet-class>com.LuoZihao.week6.demo.SearchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>homeServlet</servlet-name>
+        <servlet-class>com.LuoZihao.controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logoutServlet</servlet-name>
+        <servlet-class>com.LuoZihao.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateUserServlet</servlet-name>
+        <servlet-class>com.LuoZihao.controller.UpdateUserServlet</servlet-class>
+    </servlet>
+
         <!--automatic code-->
         <!--<servlet>
             <servlet-name>RegisterServlet</servlet-name>
@@ -35,18 +56,29 @@
 <url-pattern>/Life</url-pattern>
 <!--/Life ==LifeCycleServlet==com.dabing.week3.demo.LifeCycleServlet-->
 </servlet-mapping>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>com.LuoZihao.week6.demo.SearchServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-        <!--<servlet-mapping>
-            <servlet-name>RegisterServlet</servlet-name>
-            <url-pattern>/register</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
-            <servlet-name>ConfigDemoServlet</servlet-name>
-            <url-pattern>/config</url-pattern>
-        </servlet-mapping>-->
+
+
+    <!--<servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfigDemoServlet</servlet-name>
+        <url-pattern>/config</url-pattern>
+    </servlet-mapping>-->
         <!-- x=5,a=x so we can say a=5
         so /hello==com.dabing.week2.demo.HelloWorldservlet
         -->
@@ -69,7 +101,6 @@
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+
         </web-app>
-
-
 
