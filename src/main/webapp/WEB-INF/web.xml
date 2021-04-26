@@ -16,26 +16,26 @@
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>com.LuoZihao.week5.demo.LoginServlet</servlet-class>
 </servlet>
-    <servlet>
-        <servlet-name>redirectServlet</servlet-name>
-        <servlet-class>com.LuoZihao.week6.demo.RedirectServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>searchServlet</servlet-name>
-        <servlet-class>com.LuoZihao.week6.demo.SearchServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>homeServlet</servlet-name>
-        <servlet-class>com.LuoZihao.controller.HomeServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>logoutServlet</servlet-name>
-        <servlet-class>com.LuoZihao.controller.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>updateUserServlet</servlet-name>
-        <servlet-class>com.LuoZihao.controller.UpdateUserServlet</servlet-class>
-    </servlet>
+<!--    <servlet>-->
+<!--        <servlet-name>redirectServlet</servlet-name>-->
+<!--        <servlet-class>com.LuoZihao.week6.demo.RedirectServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet>-->
+<!--        <servlet-name>searchServlet</servlet-name>-->
+<!--        <servlet-class>com.LuoZihao.week6.demo.SearchServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet>-->
+<!--        <servlet-name>homeServlet</servlet-name>-->
+<!--        <servlet-class>com.LuoZihao.controller.HomeServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet>-->
+<!--        <servlet-name>logoutServlet</servlet-name>-->
+<!--        <servlet-class>com.LuoZihao.controller.LogoutServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet>-->
+<!--        <servlet-name>updateUserServlet</servlet-name>-->
+<!--        <servlet-class>com.LuoZihao.controller.UpdateUserServlet</servlet-class>-->
+<!--    </servlet>-->
 
         <!--automatic code-->
         <!--<servlet>

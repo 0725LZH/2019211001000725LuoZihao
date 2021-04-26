@@ -26,13 +26,13 @@
 <%@include file="header.jsp"%>
 
 <h1>User Info</h1>
-<%
-    //read cookies
-    Cookie [] allCookies=request.getCookies();
-    for(Cookie c:allCookies){
-        System.out.println("<br/>"+c.getName()+" --- "+c.getValue());
-    }
-%>
+<%--<%--%>
+<%--    //read cookies--%>
+<%--    Cookie [] allCookies=request.getCookies();--%>
+<%--    for(Cookie c:allCookies){--%>
+<%--        System.out.println("<br/>"+c.getName()+" --- "+c.getValue());--%>
+<%--    }--%>
+<%--%>--%>
 <%
     User u=(User)session.getAttribute("user");
 %>

@@ -1,3 +1,6 @@
+<%--<%@ page import="com.LuoZihao.model.User" %>--%>
+<%--<html>--%>
+<%--<head>--%>
 <%--<html>--%>
 <%--<head>--%>
 <%--    <title>My Online Shop</title>--%>
@@ -41,7 +44,11 @@
 <%--    </td></tr>--%>
 <%--</table>--%>
 
+
+
+
 <%@ page import="com.LuoZihao.model.User" %>
+<%--<%@ page import="jdk.jshell.spi.ExecutionControl" %>--%>
 <html>
 <head>
     <title>My Online Shop</title>
@@ -78,15 +85,16 @@
     <tr height="25"><td align="right"><font size="18" color="blue">
         Welcome,
         <%
-            //get session
-            User user= (User) session.getAttribute("user");
-            if(user!=null){
-                System.out.println(user.getUsername());
-            }else{
+            User user=(User) session.getAttribute("user");
+            if (user!=null){
+                out.println(user.getUsername());
+            }else {
         %>
         <font size="18" color="red"> Guest</font>
 
-        <% }  %>
+        <%
+            }
+        %>
     </font></td> </tr>
     <tr height="20"><td align="right">
         <%
