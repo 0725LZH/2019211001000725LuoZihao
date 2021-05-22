@@ -1,0 +1,410 @@
+Index: src/main/java/com/LuoZihao/dao/IProductDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/LuoZihao/dao/IProductDao.java b/src/main/java/com/LuoZihao/dao/IProductDao.java
+new file mode 100644
+--- /dev/null	(revision 8ca3715bd671bae31370aff8b88f5c92bdb403aa)
++++ b/src/main/java/com/LuoZihao/dao/IProductDao.java	(revision 8ca3715bd671bae31370aff8b88f5c92bdb403aa)
+@@ -0,0 +1,58 @@
++package com.LuoZihao.dao;
++
++import com.LuoZihao.model.Product;
++
++import java.sql.Connection;
++import java.sql.SQLException;
++import java.util.List;
++
++
++
++public interface IProductDao {
++	/**
++	 * Insert a product
++	 * @return int
++	 */
++	public int save(Product product, Connection con) throws SQLException;
++	/**
++	 * Delete a product by productId
++	 * @return int
++	 */
++	public int delete(Integer productId, Connection con) throws SQLException;
++	/**
++	 *	Update a product by productId
++	 * @return int
++	 */
++	public int update(Product instance, Connection con) throws SQLException;
++	/**
++	 *	Select a product by productId
++	 * @return Product model
++	 */
++	public Product findById(Integer productId, Connection con) throws SQLException;
++	/**
++	 * Select all product by categoryId
++	 * @param categoryId
++	 * @return List of product
++	 */
++	public List<Product> findByCategoryId(int categoryId, Connection con) throws SQLException;
++	/**
++	 * Select product by price between minprice and maxPrice
++	 * @return List of product
++	*/
++	public List<Product> findByPrice(double minPrice, double maxPrice,Connection con) throws SQLException;
++	/**
++	 * Find all products
++	 * @return List of product
++	 */
++	public List<Product> findAll(Connection con) throws SQLException;
++	/**
++	 * Select all product by name like
++	 * @return List of product
++	 */
++	public List<Product> findByProductName(String productName, Connection con) throws SQLException;
++	/**
++	 * Select all product by name like
++	 * @return List of product
++	 */
++	public List<Product> getPicture(Integer productId, Connection con) throws SQLException;
++}
+Index: src/main/java/com/LuoZihao/dao/ProductDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/LuoZihao/dao/ProductDao.java b/src/main/java/com/LuoZihao/dao/ProductDao.java
+new file mode 100644
+--- /dev/null	(revision 8ca3715bd671bae31370aff8b88f5c92bdb403aa)
++++ b/src/main/java/com/LuoZihao/dao/ProductDao.java	(revision 8ca3715bd671bae31370aff8b88f5c92bdb403aa)
+@@ -0,0 +1,185 @@
++package com.LuoZihao.dao;
++
++import com.LuoZihao.model.Product;
++
++
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.ArrayList;
++import java.util.List;
++
++public class ProductDao implements  IProductDao{
++    @Override
++    public int save(Product product, Connection con) throws SQLException {
++        int n = 0;
++        String sql = "insert into Product(ProductName,ProductDescription,picture,price,CategoryId) values(?,?,?,?,?)";
++        PreparedStatement pt = con.prepareStatement(sql);
++        pt.setString(1, product.getProductName());
++        pt.setString(2, product.getProductDescription());
++        if(product.getPicture()!=null) {
++            //for sql server
++            pt.setBinaryStream(3, product.getPicture());
++            //for mysql
++            //   pt.setBlob(3, product.getPicture());
++        }
++        pt.setDouble(4, product.getPrice());
++        pt.setInt(5, product.getCategoryId());
++        n = pt.executeUpdate();
++        if (n > 0) {
++            return n;
++        }
++        return 0;
++    }//end save
++
++    @Override
++    public int delete(Integer productId, Connection con) throws SQLException {
++        String sql="delete from Product where ProductId=?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setInt(1,productId);
++        return pstmt.executeUpdate();
++    }
++
++    @Override
++    public int update(Product instance, Connection con) throws SQLException{
++        String sql="update Product set ProductName=?,ProductDescription=?,picture=?,price=?,CategoryId=? where ProductId=?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setString(1,instance.getProductName());
++        pstmt.setString(2,instance.getProductDescription());
++        if(instance.getPicture()!=null) {
++            //for sql server
++            pstmt.setBinaryStream(3, instance.getPicture());
++            //for mysql
++            //   pt.setBlob(3, product.getPicture());
++        }
++        pstmt.setDouble(4, instance.getPrice());
++        pstmt.setInt(5, instance.getCategoryId());
++        pstmt.setInt(6,instance.getProductId());
++        return pstmt.executeUpdate();
++    }
++
++    @Override
++    public Product findById(Integer productId, Connection con) throws SQLException {
++        String sql="select * from Product where ProductId=?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setInt(1,productId);
++        ResultSet rs= pstmt.executeQuery();
++        Product product=null;
++        if(rs.next()){
++            product=new Product();
++            product.setProductId(rs.getInt("ProductId"));
++            product.setProductName(rs.getString("ProductName"));
++            product.setProductDescription(rs.getString("ProductDescription"));
++            product.setPicture(rs.getBinaryStream("picture"));
++            product.setPrice(rs.getDouble("price"));
++            product.setCategoryId(rs.getInt("CategoryId"));
++        }
++        return product;
++    }
++
++    @Override
++    public List<Product> findByCategoryId(int categoryId, Connection con)  throws SQLException{
++        String sql="select * from Product where CategoryId=?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setInt(1,categoryId);
++        ResultSet rs= pstmt.executeQuery();
++        Product product=null;
++        List<Product> pro=new ArrayList<Product>();
++        if(rs.next()){
++            product=new Product();
++            product.setProductId(rs.getInt("ProductId"));
++            product.setProductName(rs.getString("ProductName"));
++            product.setProductDescription(rs.getString("ProductDescription"));
++            product.setPicture(rs.getBinaryStream("picture"));
++            product.setPrice(rs.getDouble("price"));
++            product.setCategoryId(rs.getInt("CategoryId"));
++            pro.add(product);
++        }
++        return pro;
++    }
++
++    @Override
++    public List<Product> findByPrice(double minPrice, double maxPrice, Connection con) throws SQLException {
++        String sql="select * from Product where price between ? and ?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setDouble(1,minPrice);
++        pstmt.setDouble(2,maxPrice);
++        ResultSet rs= pstmt.executeQuery();
++        Product product=null;
++        List<Product> pro=new ArrayList<Product>();
++        if(rs.next()){
++            product=new Product();
++            product.setProductId(rs.getInt("ProductId"));
++            product.setProductName(rs.getString("ProductName"));
++            product.setProductDescription(rs.getString("ProductDescription"));
++            product.setPicture(rs.getBinaryStream("picture"));
++            product.setPrice(rs.getDouble("price"));
++            product.setCategoryId(rs.getInt("CategoryId"));
++            pro.add(product);
++        }
++        return pro;
++    }
++
++    @Override
++    public List<Product> findAll(Connection con) throws SQLException {
++        String sql="select * from Product";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        ResultSet rs= pstmt.executeQuery();
++        Product product=null;
++        List<Product> pro=new ArrayList<Product>();
++        if(rs.next()){
++            product=new Product();
++            product.setProductId(rs.getInt("ProductId"));
++            product.setProductName(rs.getString("ProductName"));
++            product.setProductDescription(rs.getString("ProductDescription"));
++            product.setPicture(rs.getBinaryStream("picture"));
++            product.setPrice(rs.getDouble("price"));
++            product.setCategoryId(rs.getInt("CategoryId"));
++            pro.add(product);
++        }
++        return pro;
++    }
++
++    @Override
++    public List<Product> findByProductName(String productName, Connection con) throws SQLException {
++        String sql="select * from Product where ProductName=?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setString(1,productName);
++        ResultSet rs= pstmt.executeQuery();
++        Product product=null;
++        List<Product> pro=new ArrayList<Product>();
++        if(rs.next()){
++            product=new Product();
++            product.setProductId(rs.getInt("ProductId"));
++            product.setProductName(rs.getString("ProductName"));
++            product.setProductDescription(rs.getString("ProductDescription"));
++            product.setPicture(rs.getBinaryStream("picture"));
++            product.setPrice(rs.getDouble("price"));
++            product.setCategoryId(rs.getInt("CategoryId"));
++            pro.add(product);
++        }
++        return pro;
++    }
++
++    @Override
++    public List<Product> getPicture(Integer productId, Connection con) throws SQLException {
++        String sql="select * from Product where ProductId=?";
++        PreparedStatement pstmt= con.prepareStatement(sql);
++        pstmt.setInt(1,productId);
++        ResultSet rs= pstmt.executeQuery();
++        Product product=null;
++        List<Product> pro=new ArrayList<Product>();
++        if(rs.next()){
++            product=new Product();
++            product.setProductId(rs.getInt("ProductId"));
++            product.setProductName(rs.getString("ProductName"));
++            product.setProductDescription(rs.getString("ProductDescription"));
++            product.setPicture(rs.getBinaryStream("picture"));
++            product.setPrice(rs.getDouble("price"));
++            product.setCategoryId(rs.getInt("CategoryId"));
++            pro.add(product);
++        }
++        return pro;
++    }
++}
+\ No newline at end of file
+Index: src/main/webapp/WEB-INF/views/admin/addProduct.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/WEB-INF/views/admin/addProduct.jsp b/src/main/webapp/WEB-INF/views/admin/addProduct.jsp
+--- a/src/main/webapp/WEB-INF/views/admin/addProduct.jsp	(revision 2feec96bb0b75262d34cb62d624407a52e3dc036)
++++ b/src/main/webapp/WEB-INF/views/admin/addProduct.jsp	(revision 8ca3715bd671bae31370aff8b88f5c92bdb403aa)
+@@ -1,55 +1,62 @@
++
+ 
+ <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+ <%@include file="../header.jsp"%>
+ 
+ <div id="contact-page" class="container">
+-<div class="row">  	
+-<div class="col-sm-2">
+-						<div class="single-widget">
+-							<h2>Modules</h2>
+-							<ul class="nav nav-pills nav-stacked">
+-								<li><a href="<%=basePath%>admin/home">Home</a></li>
+-								<li><a href="<%=basePath%>admin/productList">Product</a></li>
+-								<li><a href="<%=basePath%>admin/orderList">Order</a></li>
+-								<li><a href="<%=basePath%>admin/userList">User</a></li>
+-							</ul>
+-						</div>
+-					</div>
+-	    		<div class="col-sm-8">
+-	    			<div class="contact-form">
+-	    				<h2 class="title text-center">Add Product</h2>
+-	    				<div class="status alert alert-success" style="display: none"></div>
+-				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" enctype="multipart/form-data" action="<%=basePath %>admin/addProduct">
+-				            <div class="form-group col-md-6">
+-				                <input type="text" name="productName" class="form-control" required="required" placeholder="Product Name">
+-				            </div>
+-				            <div class="form-group col-md-6">
+-				                <input type="text" name="price" class="form-control" required="required" placeholder="Price">
+-				            </div>
+-				            <div class="form-group col-md-6">
+-				               	<select name="categoryId">
+-										<option >-- Category --</option>
+-											<!-- loop_start -->
+-											
+-										<option value=""></option>
+-										
+-										<!-- loop_end -->
+-										
+-										</select>
+-				            </div>
+-				            <div class="form-group col-md-6">
+-				                <input type="file" name="picture" class="form-control" required="required" placeholder="picture">
+-				            </div>
+-				         
+-				            <div class="form-group col-md-12">
+-				                <textarea name="productDescription" id="message"  class="form-control" cols="8" rows="8" placeholder="Product Description Here"></textarea>
+-				            </div>                        
+-				            <div class="form-group col-md-12">
+-				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
+-				            </div>
+-				        </form>
+-	    			</div>
+-	    		</div>
+-	    		</div>
+-	    		</div>
+-<%@include file="../footer.jsp"%>
++	<div class="row">
++		<div class="col-sm-2">
++			<div class="single-widget">
++				<h2>Modules</h2>
++				<ul class="nav nav-pills nav-stacked">
++					<li><a href="<%=basePath%>admin/home">Home</a></li>
++					<li><a href="<%=basePath%>admin/productList">Product</a></li>
++					<li><a href="<%=basePath%>admin/orderList">Order</a></li>
++					<li><a href="<%=basePath%>admin/userList">User</a></li>
++				</ul>
++			</div>
++		</div>
++		<div class="col-sm-8">
++			<div class="contact-form">
++				<h2 class="title text-center">Add Product</h2>
++				<div class="status alert alert-success" style="display: none"></div>
++				<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" enctype="multipart/form-data" action="<%=basePath %>admin/addProduct">
++					<div class="form-group col-md-6">
++						<input type="text" name="productName" class="form-control" required="required" placeholder="Product Name">
++					</div>
++					<div class="form-group col-md-6">
++						<input type="text" name="price" class="form-control" required="required" placeholder="Price">
++					</div>
++					<div class="form-group col-md-6">
++						<select name="categoryId">
++							<option >-- Category --</option>
++							<!-- loop_start -->
++
++							<option value="1">FASHION</option>
++							<option value="2">HOUSEHOLD</option>
++							<option value="3">INTERIORS</option>
++							<option value="4">CLOTHING</option>
++							<option value="5">BAGS</option>
++							<option value="6">SHOES</option>
++							<option value="7">BOOKS</option>
++							<option value="8">OTHER</option>
++							<!-- loop_end -->
++
++						</select>
++					</div>
++					<div class="form-group col-md-6">
++						<input type="file" name="picture" class="form-control" required="required" placeholder="picture">
++					</div>
++
++					<div class="form-group col-md-12">
++						<textarea name="productDescription" id="message"  class="form-control" cols="8" rows="8" placeholder="Product Description Here"></textarea>
++					</div>
++					<div class="form-group col-md-12">
++						<input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
++					</div>
++				</form>
++			</div>
++		</div>
++	</div>
++</div>
++<%@include file="../footer.jsp"%>
+\ No newline at end of file
+Index: target/LuoZihao2019211001000725-1.0-SNAPSHOT/WEB-INF/web.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/LuoZihao2019211001000725-1.0-SNAPSHOT/WEB-INF/web.xml b/target/LuoZihao2019211001000725-1.0-SNAPSHOT/WEB-INF/web.xml
+--- a/target/LuoZihao2019211001000725-1.0-SNAPSHOT/WEB-INF/web.xml	(revision 2feec96bb0b75262d34cb62d624407a52e3dc036)
++++ b/target/LuoZihao2019211001000725-1.0-SNAPSHOT/WEB-INF/web.xml	(revision 8ca3715bd671bae31370aff8b88f5c92bdb403aa)
+@@ -109,6 +109,15 @@
+     <welcome-file-list>
+         <welcome-file>home</welcome-file>
+     </welcome-file-list>
++<!--    <filter>-->
++<!--        <filter-name>HelloServlet</filter-name>-->
++<!--        <filter-class>com.LuoZihao.filter.HelloFilter</filter-class>-->
++<!--    </filter>-->
++<!--    <filter-mapping>-->
++<!--        <filter-name>HelloFilter</filter-name>-->
++<!--        <url-pattern>/hello</url-pattern>-->
++<!--        -->
++<!--    </filter-mapping>-->
+ 
+         </web-app>
+ 
