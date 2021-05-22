@@ -1,9 +1,19 @@
 package com.LuoZihao.dao;
 
+<<<<<<< HEAD
 
 import com.LuoZihao.model.Product;
 
 import java.sql.*;
+=======
+import com.LuoZihao.model.Product;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> origin/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +91,16 @@ public class ProductDao implements  IProductDao{
         PreparedStatement pstmt= con.prepareStatement(sql);
         pstmt.setInt(1,categoryId);
         ResultSet rs= pstmt.executeQuery();
+<<<<<<< HEAD
         List<Product> pro=new ArrayList<Product>();
         while(rs.next()){
             Product product=new Product();
+=======
+        Product product=null;
+        List<Product> pro=new ArrayList<Product>();
+        if(rs.next()){
+            product=new Product();
+>>>>>>> origin/master
             product.setProductId(rs.getInt("ProductId"));
             product.setProductName(rs.getString("ProductName"));
             product.setProductDescription(rs.getString("ProductDescription"));
@@ -102,9 +119,16 @@ public class ProductDao implements  IProductDao{
         pstmt.setDouble(1,minPrice);
         pstmt.setDouble(2,maxPrice);
         ResultSet rs= pstmt.executeQuery();
+<<<<<<< HEAD
         List<Product> pro=new ArrayList<Product>();
         while(rs.next()){
             Product product=new Product();
+=======
+        Product product=null;
+        List<Product> pro=new ArrayList<Product>();
+        if(rs.next()){
+            product=new Product();
+>>>>>>> origin/master
             product.setProductId(rs.getInt("ProductId"));
             product.setProductName(rs.getString("ProductName"));
             product.setProductDescription(rs.getString("ProductDescription"));
@@ -121,9 +145,16 @@ public class ProductDao implements  IProductDao{
         String sql="select * from Product";
         PreparedStatement pstmt= con.prepareStatement(sql);
         ResultSet rs= pstmt.executeQuery();
+<<<<<<< HEAD
         List<Product> pro=new ArrayList<Product>();
         while(rs.next()){
             Product product=new Product();
+=======
+        Product product=null;
+        List<Product> pro=new ArrayList<Product>();
+        if(rs.next()){
+            product=new Product();
+>>>>>>> origin/master
             product.setProductId(rs.getInt("ProductId"));
             product.setProductName(rs.getString("ProductName"));
             product.setProductDescription(rs.getString("ProductDescription"));
@@ -141,9 +172,16 @@ public class ProductDao implements  IProductDao{
         PreparedStatement pstmt= con.prepareStatement(sql);
         pstmt.setString(1,productName);
         ResultSet rs= pstmt.executeQuery();
+<<<<<<< HEAD
         List<Product> pro=new ArrayList<Product>();
         while(rs.next()){
             Product product=new Product();
+=======
+        Product product=null;
+        List<Product> pro=new ArrayList<Product>();
+        if(rs.next()){
+            product=new Product();
+>>>>>>> origin/master
             product.setProductId(rs.getInt("ProductId"));
             product.setProductName(rs.getString("ProductName"));
             product.setProductDescription(rs.getString("ProductDescription"));
@@ -161,9 +199,16 @@ public class ProductDao implements  IProductDao{
         PreparedStatement pstmt= con.prepareStatement(sql);
         pstmt.setInt(1,productId);
         ResultSet rs= pstmt.executeQuery();
+<<<<<<< HEAD
         List<Product> pro=new ArrayList<Product>();
         while(rs.next()){
             Product product=new Product();
+=======
+        Product product=null;
+        List<Product> pro=new ArrayList<Product>();
+        if(rs.next()){
+            product=new Product();
+>>>>>>> origin/master
             product.setProductId(rs.getInt("ProductId"));
             product.setProductName(rs.getString("ProductName"));
             product.setProductDescription(rs.getString("ProductDescription"));
@@ -174,6 +219,7 @@ public class ProductDao implements  IProductDao{
         }
         return pro;
     }
+<<<<<<< HEAD
     public byte[] getPictureById(Integer productId,Connection con) throws SQLException{
         byte[] imgByte=null;
         String sql="select picture from Product where ProductId=?";
@@ -186,4 +232,6 @@ public class ProductDao implements  IProductDao{
         }
         return imgByte;
     }
+=======
+>>>>>>> origin/master
 }
