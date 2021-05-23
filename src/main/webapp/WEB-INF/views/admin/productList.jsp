@@ -62,7 +62,7 @@
 						Product p=(Product) pageContext.findAttribute("p");
 						int pid=p.getProductId();
 						java.sql.Connection con=(java.sql.Connection) application.getAttribute("con");
-						String catName=com.ZhouWeiqiang.model.Category.findByCategoryId(con,pid);
+						String catName=com.LuoZihao.model.Category.findByCategoryId(con,pid);
 					%>
 					<td class="cart_quantity">${p.categoryId}</td>
 
