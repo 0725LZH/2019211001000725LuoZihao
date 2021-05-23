@@ -20,12 +20,12 @@
 						<h2>Category</h2>
 						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
 							<!-- Loop_start -->		
-										
+
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title"><a href="<%=basePath%>shop?categoryId=id">category Name </a></h4>
 								</div>
-								
+
 							</div>
 							
 							<!-- Loop_end -->
