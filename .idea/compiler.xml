@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="2019211001000725LuoZihao" />
+        <module name="jdbcdemo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="2019211001000725LuoZihao" target="1.8" />
       <module name="demo" target="1.8" />
+      <module name="jdbcdemo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
