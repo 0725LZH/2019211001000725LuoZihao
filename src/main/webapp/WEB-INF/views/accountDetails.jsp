@@ -1,6 +1,6 @@
 		<%@include file="header.jsp" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.dabing.model.User" %>
+<%@ page import="com.LuoZihao.model.User" %>
 	<section id="z`z`">
 		<div class="container">
 			<div class="step-one">
@@ -18,7 +18,7 @@
 							<li>Password :<span><%=u.getPassword()%></span></li>
 							<li>Email :<span><%=u.getEmail()%></span></li>
 							<li>Gender :<span><%=u.getGender()%></span></li>
-							<li>Birthdate :<span><%=u.getBirthDate()%></span></li>
+							<li>Birthdate :<span><%=u.getBirthdate()%></span></li>
 						</ul>
    						<a class="btn btn-default update" href="updateUser?id=<%=u.getId()%>">Update</a>
 					<%}%>
@@ -72,10 +72,10 @@
 						</td>
 						<td class="cart_total">
 						<%
-							com.dabing.model.Order o=(com.dabing.model.Order)pageContext.findAttribute("o");
+							com.LuoZihao.model.Order o=(com.LuoZihao.model.Order)pageContext.findAttribute("o");
 							int n=o.getPaymentId();
 							java.sql.Connection con=(java.sql.Connection)application.getAttribute("con");
-							String paymentType=com.dabing.model.Payment.findByPaymentId(con,n);
+							String paymentType=com.LuoZihao.model.Payment.findByPaymentId(con,n);
 							 %>
 								<p class="cart_total_price"><%=paymentType %></p>
 							</td>

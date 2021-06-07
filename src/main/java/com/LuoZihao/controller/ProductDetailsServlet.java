@@ -25,7 +25,7 @@ public class ProductDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<Category> categoryList=Category.findallCategory(con);
-            request.setAttribute("categoryLsit",categoryList);
+            request.setAttribute("categoryList",categoryList);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
