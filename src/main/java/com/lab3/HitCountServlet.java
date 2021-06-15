@@ -30,7 +30,7 @@ public class HitCountServlet extends HttpServlet {
             times++;
 
             context.setAttribute("visitTimes", times);
-            out.print("Total Number of Hits"+times);
+            out.print("<body><center><h1>Total Number of Hits</h1><h2>"+times+"</h2></body></center>");
             System.out.println("我被访问了！"+times);
     }
     @Override
